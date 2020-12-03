@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 let productoSchema = new Schema({
     nombre: {
         type: String,
+        unique: true,
         required: [true, 'El nombre es necesario']
     },
     precioUni: {

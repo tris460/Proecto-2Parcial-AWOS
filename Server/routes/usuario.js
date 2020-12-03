@@ -9,7 +9,7 @@ app.get('/usuario', function(req, res){
     let hasta = req.query.hasta || 5; //cuántos tomar
 
     Usuario.find({ estado: true })
-    .skip(Number(desde))
+    .skip(Number(desde)) 
     .limit(Number(hasta))
     .exec((err, usuarios) => {
         if(err){
@@ -27,7 +27,6 @@ app.get('/usuario', function(req, res){
         });
     });
 });
-
 
 app.post('/usuario', function(req, res){
     let body = req.body;

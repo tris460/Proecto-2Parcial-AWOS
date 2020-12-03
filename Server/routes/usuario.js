@@ -72,12 +72,38 @@ app.put('/usuario/:id', function(req, res){
 });
 
 app.delete('/usuario/:id', function(req, res){
+    
     let id = req.params.id;
-    res.json({
-        ok: 200,
-        mensaje: 'Usuario eliminado con éxito',
-        id: id
+    //----------------PARA DESACTIVAR
+    Usuario.findByIdAndUpdate(id, {estado: false}, {new: true, runValidators: true, context: 'query'}, (err, usrDB) => {
+        if(err){
+            return res.status(400).json({
+                ok: false,
+                msg: 'Ocurrió un error al eliminar',
+                err
+            });
+        }
+        res.json({
+            ok: true,
+            msg: 'Usuario eliminado con éxito',
+            usrDB
+        })
     });
+    //----------------PARA BORRAR
+    // Usuario.deleteOne({ _id: id }, (err, usuarioBorrado) => {
+    //     if(err){
+    //         return res.status(400).json({
+    //             ok: false,
+    //             msg: 'Ocurrió un error al eliminar',
+    //             err
+    //         });
+    //     }
+    //     res.json({
+    //         ok: true,
+    //         msg: 'Usuario eliminado con éxito',
+    //         usuarioBorrado
+    //     });
+    // });
 });
 
 module.exports = app;

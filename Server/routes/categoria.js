@@ -69,4 +69,23 @@ app.put('/categoria/:id', (req, res) => {
     });
 });
 
+app.delete('/categoria/:id', (req, res) => {
+    let id = req.params.id;
+
+    Categoria.findByIdAndRemove(id, { context: 'query' }, (err, catDB) => {
+        if(err){
+            return res.status(400).json({
+                ok: false,
+                msg: 'Ocurrió un error al momento de eliminar una categoría',
+                err
+            });
+        }
+        res.json({
+            ok: true,
+            msg: 'La categoría fue eliminada con éxito',
+            catDB
+        });
+    });
+});
+
 module.exports = app;
